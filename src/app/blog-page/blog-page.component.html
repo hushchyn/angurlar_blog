@@ -1,0 +1,106 @@
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand">Angular blog</a>
+      <form class="d-flex">
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example" *ngIf="btnSignIn" >
+          <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#signInModal">Sign In</button>
+          <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#signUpModal" >Sign Up</button>
+        </div>
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example" *ngIf="btnSignOut" >
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addPost" (click)="changeBtn()">Add Post</button>
+          <button type="button" class="btn btn-warning">{{ isUser }}</button>
+          <button type="button" class="btn btn-success" (click)="signOut()">Sign Out</button>
+        </div>
+      </form>
+    </div>
+  </nav>
+
+<div class="posts" *ngFor="let post of userPost">
+  <div class="card">
+    <div class="card-header">
+      <h2>{{ post.topic }}</h2>
+      <small>12.09.2019</small>
+    </div>
+    <div>
+      <div class="content">
+        <div>
+          <small class="postedBy" > Posted by: {{ post.postedBy }}</small>
+          <p> {{ post.message }} </p>
+        </div>
+        <div class="btn-group" *ngIf=" admin || author === post.postedBy " >
+          <button type="button" class="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#addPost" (click)="editPost(post)" >edit</button>
+          <button type="button" class="btn btn-danger"  (click)="deletePost(post)">delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="signInModal" tabindex="-1" aria-labelledby="signInModalLabel" aria-hidden="true" *ngFor="let user of users">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signInModalLabel">Sign In</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Email</p>
+        <input type="text" class="form-control" [(ngModel)]="email" >
+        <p>Password</p>
+        <input type="text" class="form-control" [(ngModel)]="password" >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" [disabled]="(!email) ? true: (!password) ? true : false" (click)="signIn()"  data-bs-dismiss="modal">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addPost" tabindex="-1" aria-labelledby="addPostLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addPostLabel">Sign In</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Title</p>
+        <input type="text" class="form-control" [(ngModel)]="postTitle" >
+        <p>Text</p>
+        <textarea name="" id="" cols="30" rows="4" class="form-control" [(ngModel)]="postText"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" [disabled]= "(!postTitle) ? true: (!postText) ? true : false" (click)="savePost()" *ngIf="!editStatus" data-bs-dismiss="modal" >Submit</button>
+        <button type="button" class="btn btn-success" *ngIf="editStatus" (click)="saveEditPost()" data-bs-dismiss="modal" >Edit post</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpLabel" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signUpLabel">Sign Up</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>User Name</p>
+        <input type="text" class="form-control" [(ngModel)]="userName" >
+        <p>Email</p>
+        <input type="text" class="form-control" [(ngModel)]="email" >
+        <p>Password</p>
+        <input type="password" class="form-control" [(ngModel)]="password" >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" (click)="signUp()" data-bs-dismiss="modal" [disabled]="(!userName) ? true : (!email) ? true : (!password) ? true : false " >Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

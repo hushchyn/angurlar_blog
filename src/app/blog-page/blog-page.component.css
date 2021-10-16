@@ -1,0 +1,40 @@
+.card {
+  padding: 1rem;
+  border: #ccc 1px dotted;
+  margin: 0.7rem 0;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content {
+  margin-bottom: .5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.posts {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.btn-group {
+  align-items: end;
+}
+
+.postedBy {
+  font-size: 14px;
+  font-weight: 500;
+  color: #999;
+}
+
+p {
+  margin-top: 12px;
+}
+
+.wrong{
+  color: red;
+}
